@@ -11,6 +11,7 @@
 @interface ViewController ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (nonatomic) NSArray *urlArray;
 
 @end
 
@@ -19,7 +20,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSString *urlString = @"http://imgur.com/y9MIaCS.png";
+    self.urlArray = @[@"http://imgur.com/y9MIaCS.png", @"https://i.imgur.com/bktnImE.png", @"http://imgur.com/zdwdenZ.png", @"http://imgur.com/CoQ8aNl.png", @"http://imgur.com/2vQtZBb.png"];
+    
+    [self addImageToImageView:self.urlArray[0]];
+    
+}
+
+- (void)addImageToImageView:(NSString*)urlString {
+    
     NSURL *url = [NSURL URLWithString:urlString];
     
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -45,6 +53,11 @@
     [downloadTask resume];
 }
 
+- (IBAction)changeUrl:(UIButton *)sender {
+    NSInteger randomIndex = arc4random_uniform(5);
+    [self addImageToImageView:self.urlArray[randomIndex]];
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
